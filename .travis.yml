@@ -19,7 +19,11 @@ after_success:
   - if [ -z "$QUAY_USER" ]; then
       echo "PR build, skipping Quay push";
     else
-      echo $QUAY_PASS | docker login -u $QUAY_USER --password-stdin quay.io;
-      make quay-push;
+      echo $QUAY_PASS | docker login -u $QUAY_USER --password-stdin;
+      echo Pushing to quay.io/$QUAY_REPOSITORY:$TRAVIS_COMMIT
+      docker build -t quay.io/$(QUAY_REPOSITORY):$TRAVIS_COMMIT -f Dockerfile.ci . ;
+      docker push quay.io/$QUAY_REPOSITORY:$TRAVIS_COMMIT;
+      docker tag quay.io/$(QUAY_REPOSITORY):$TRAVIS_COMMIT quay.io/$(QUAY_REPOSITORY):$TRAVIS_TAG;
+      docker push quay.io/$QUAY_REPOSITORY:$TRAVIS_TAG;
     fi
-
+ 
