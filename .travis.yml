@@ -20,10 +20,13 @@ after_success:
       echo "PR build, skipping Quay push";
     else
       echo $QUAY_PASS | docker login -u $QUAY_USER --password-stdin quay.io;
-      echo "Pushing to quay.io/${QUAY_REPOSITORY}:${TRAVIS_COMMIT}"
+      
       docker build -t quay.io/${QUAY_REPOSITORY}:${TRAVIS_COMMIT} -f Dockerfile.ci . ;
+      
+      echo "Pushing to quay.io/${QUAY_REPOSITORY}:${TRAVIS_COMMIT}";
       docker push quay.io/${QUAY_REPOSITORY}:${TRAVIS_COMMIT};
-      echo "Pushing to quay.io/${QUAY_REPOSITORY}:${TRAVIS_TAG}"
+      
+      echo "Pushing to quay.io/${QUAY_REPOSITORY}:${TRAVIS_TAG}";
       docker tag quay.io/${QUAY_REPOSITORY}:${TRAVIS_COMMIT} quay.io/${QUAY_REPOSITORY}:${TRAVIS_TAG};
       docker push quay.io/${QUAY_REPOSITORY}:${TRAVIS_TAG};
     fi
