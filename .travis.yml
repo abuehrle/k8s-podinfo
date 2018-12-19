@@ -12,12 +12,8 @@ addons:
     packages:
       - docker-ce
 
-before_install:
-  - make dep
-
 script:
   - make test
-  - make build
 
 after_success:
   - if [ -z "$QUAY_USER" ]; then
