@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/stefanprodan/k8s-podinfo/pkg/version"
+	"github.com/abuehrle/k8s-podinfo/pkg/version"
 	"go.uber.org/zap"
 )
 

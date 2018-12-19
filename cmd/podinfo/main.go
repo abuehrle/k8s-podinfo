@@ -10,9 +10,9 @@ import (
 
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
-	"github.com/stefanprodan/k8s-podinfo/pkg/api"
-	"github.com/stefanprodan/k8s-podinfo/pkg/signals"
-	"github.com/stefanprodan/k8s-podinfo/pkg/version"
+	"github.com/abuehrle/k8s-podinfo/pkg/api"
+	"github.com/abuehrle/k8s-podinfo/pkg/signals"
+	"github.com/abuehrle/k8s-podinfo/pkg/version"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )

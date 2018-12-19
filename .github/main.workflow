@@ -18,7 +18,7 @@ action "Build" {
   needs = ["Test"]
   uses = "./.github/actions/docker"
   secrets = ["DOCKER_IMAGE"]
-  args = ["build", "Dockerfile.gh"]
+  args = ["build", "Dockerfile"]
 }
 
 action "Login" {
