@@ -17,15 +17,9 @@ before_install:
 
 script:
   - make test
-  - make build docker-build
+  - make build
 
 after_success:
-  - if [ -z "$DOCKER_USER" ]; then
-      echo "PR build, skipping Docker Hub push";
-    else
-      echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin;
-      make docker-push;
-    fi
   - if [ -z "$QUAY_USER" ]; then
       echo "PR build, skipping Quay push";
     else
@@ -33,9 +27,3 @@ after_success:
       make quay-push;
     fi
 
-deploy:
-  - provider: script
-    skip_cleanup: true
-    script: curl -sL http://git.io/goreleaser | bash
-    on:
-      tags: true
