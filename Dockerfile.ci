@@ -6,12 +6,15 @@ WORKDIR /go/src/github.com/abuehrle/k8s-podinfo
 
 COPY . .
 
-RUN GIT_COMMIT=$(git rev-list -1 HEAD) && \
+RUN go test $(go list ./... | grep -v integration | grep -v /vendor/ | grep -v /template/) -cover
+
+RUN gofmt -l -d $(find . -type f -name '*.go' -not -path "./vendor/*") && \
+  GIT_COMMIT=$(git rev-list -1 HEAD) && \
   CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w \
   -X github.com/abuehrle/k8s-podinfo/pkg/version.REVISION=${GIT_COMMIT}" \
   -a -installsuffix cgo -o podinfo ./cmd/podinfo
 
-RUN GIT_COMMIT=$(git rev-list -1 HEAD) && CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w \
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags "-s -w \
       -X github.com/abuehrle/k8s-podinfo/pkg/version.REVISION=${GIT_COMMIT}" \
       -a -installsuffix cgo -o podcli ./cmd/podcli
 
